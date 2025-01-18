@@ -771,6 +771,18 @@ XXL-JOB是一个分布式任务调度平台，其核心设计目标是开发迅�
     - 675、上海热风时尚管理集团【热风】
     - 676、HashKey Exchange
     - 677、傲基（深圳）跨境商务股份有限公司
+    - 678、青岛文达通科技股份有限公司
+    - 679、杭州普罗云科技有限公司
+    - 680、浙江云鹭科技有限公司
+    - 681、中山市芯宏柿网络科技有限公司
+    - 682、深圳市家家顺物联科技
+    - 683、重庆斑西科技有限公司
+    - 684、福建省泰古信息技术有限公司
+    - 685、贵阳永青仪电科技有限公司
+    - 686、广州博依特智能信息科技有限公司
+    - 687、河南宠呦呦信息技术有限公司
+    - 688、陕西星邑空间技术有限公司
+    - 689、广东西欧克实业有限公司
     - ……
 
 > 更多接入的公司，欢迎在 [登记地址](https://github.com/xuxueli/xxl-job/issues/1 ) 登记，登记仅仅为了产品推广。
@@ -843,40 +855,45 @@ XXL-JOB是一个分布式任务调度平台，其核心设计目标是开发迅�
 #### 步骤一：调度中心配置：
 调度中心配置文件地址：
 
-    /xxl-job/xxl-job-admin/src/main/resources/application.properties
-
+```
+/xxl-job/xxl-job-admin/src/main/resources/application.properties
+```
 
 调度中心配置内容说明：
 
-    ### 调度中心JDBC链接：链接地址请保持和 2.1章节 所创建的调度数据库的地址一致
-    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
-    spring.datasource.username=root
-    spring.datasource.password=root_pwd
-    spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-    
-    ### 报警邮箱
-    spring.mail.host=smtp.qq.com
-    spring.mail.port=25
-    spring.mail.username=xxx@qq.com
-    spring.mail.password=xxx
-    spring.mail.properties.mail.smtp.auth=true
-    spring.mail.properties.mail.smtp.starttls.enable=true
-    spring.mail.properties.mail.smtp.starttls.required=true
-    spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
-    
-    ### 调度中心通讯TOKEN [选填]：非空时启用；
-    xxl.job.accessToken=
-    
-    ### 调度中心国际化配置 [必填]： 默认为 "zh_CN"/中文简体, 可选范围为 "zh_CN"/中文简体, "zh_TC"/中文繁体 and "en"/英文；
-    xxl.job.i18n=zh_CN
-    
-    ## 调度线程池最大线程配置【必填】
-    xxl.job.triggerpool.fast.max=200
-    xxl.job.triggerpool.slow.max=100
-    
-    ### 调度中心日志表数据保存天数 [必填]：过期日志自动清理；限制大于等于7时生效，否则, 如-1，关闭自动清理功能；
-    xxl.job.logretentiondays=30
+```
+### 调度中心JDBC链接：链接地址请保持和 2.1章节 所创建的调度数据库的地址一致
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+spring.datasource.username=root
+spring.datasource.password=root_pwd
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 
+### 报警邮箱
+spring.mail.host=smtp.qq.com
+spring.mail.port=25
+spring.mail.username=xxx@qq.com
+spring.mail.password=xxx
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
+
+### 调度中心通讯TOKEN [选填]：非空时启用；
+xxl.job.accessToken=
+
+### 调度中心通讯超时时间[选填]，单位秒；默认3s；
+xxl.job.timeout=3
+
+### 调度中心国际化配置 [必填]： 默认为 "zh_CN"/中文简体, 可选范围为 "zh_CN"/中文简体, "zh_TC"/中文繁体 and "en"/英文；
+xxl.job.i18n=zh_CN
+
+## 调度线程池最大线程配置【必填】
+xxl.job.triggerpool.fast.max=200
+xxl.job.triggerpool.slow.max=100
+
+### 调度中心日志表数据保存天数 [必填]：过期日志自动清理；限制大于等于7时生效，否则, 如-1，关闭自动清理功能；
+xxl.job.logretentiondays=30
+```
 
 
 #### 步骤二：部署项目：
@@ -931,29 +948,35 @@ docker run -e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_jo
 #### 步骤二：执行器配置
 执行器配置，配置文件地址：
 
-    /xxl-job/xxl-job-executor-samples/xxl-job-executor-sample-springboot/src/main/resources/application.properties
+```
+/xxl-job/xxl-job-executor-samples/xxl-job-executor-sample-springboot/src/main/resources/application.properties
+```
 
 执行器配置，配置内容说明：
 
-    ### 调度中心部署根地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-    xxl.job.admin.addresses=http://127.0.0.1:8080/xxl-job-admin
-    
-    ### 执行器通讯TOKEN [选填]：非空时启用；
-    xxl.job.accessToken=
-    
-    ### 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
-    xxl.job.executor.appname=xxl-job-executor-sample
-    ### 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
-    xxl.job.executor.address=
-    ### 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
-    xxl.job.executor.ip=
-    ### 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
-    xxl.job.executor.port=9999
-    ### 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
-    xxl.job.executor.logpath=/data/applogs/xxl-job/jobhandler
-    ### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
-    xxl.job.executor.logretentiondays=30
+```
+### 调度中心部署根地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+xxl.job.admin.addresses=http://127.0.0.1:8080/xxl-job-admin
 
+### 调度中心通讯TOKEN [选填]：非空时启用；
+xxl.job.admin.accessToken=default_token
+
+### 调度中心通讯超时时间[选填]，单位秒；默认3s；
+xxl.job.admin.timeout=3
+
+### 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
+xxl.job.executor.appname=xxl-job-executor-sample
+### 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
+xxl.job.executor.address=
+### 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
+xxl.job.executor.ip=
+### 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
+xxl.job.executor.port=9999
+### 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
+xxl.job.executor.logpath=/data/applogs/xxl-job/jobhandler
+### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
+xxl.job.executor.logretentiondays=30
+```
 
 #### 步骤三：执行器组件配置
 
@@ -1012,7 +1035,7 @@ public XxlJobSpringExecutor xxlJobExecutor() {
 
 
 #### 步骤二：“GLUE模式(Java)” 任务开发：
-请点击任务右侧 “GLUE” 按钮，进入 “GLUE编辑器开发界面” ，见下图。“GLUE模式(Java)” 运行模式的任务默认已经初始化了示例任务代码，即打印Hello World。
+请点击任务右侧 “GLUE IDE” 按钮，进入 “GLUE编辑器开发界面” ，见下图。“GLUE模式(Java)” 运行模式的任务默认已经初始化了示例任务代码，即打印Hello World。
 （ “GLUE模式(Java)” 运行模式的任务实际上是一段继承自IJobHandler的Java类代码，它在执行器项目中运行，可使用@Resource/@Autowire注入执行器里中的其他服务，详细介绍请查看第三章节）
 
 ![输入图片说明](https://www.xuxueli.com/doc/static/xxl-job/images/img_Fgql.png "在这里输入图片标题")
@@ -1149,13 +1172,14 @@ public void demoJobHandler() throws Exception {
 - demoJobHandler：简单示例任务，任务内部模拟耗时任务逻辑，用户可在线体验Rolling Log等功能；
 - shardingJobHandler：分片示例任务，任务内部模拟处理分片参数，可参考熟悉分片任务；
 - httpJobHandler：通用HTTP任务Handler；业务方只需要提供HTTP链接等信息即可，不限制语言、平台。示例任务入参如下：
-    ```
-    url: http://www.xxx.com
-    method: get 或 post
-    data: post-data
-    ```
-- commandJobHandler：通用命令行任务Handler；业务方只需要提供命令行即可；如 “pwd”命令；
-
+```
+{
+    "url": "http://www.baidu.com",
+    "method": "get",
+    "data": "hello world"
+}
+```
+- commandJobHandler：通用命令行任务Handler；业务方只需要提供命令行即可，命令及参数之间通过空格隔开；如任务参数 "ls la" 或 "pwd" 将会执行命令并输出数据；
 
 ### 3.3 GLUE模式(Java)
 任务以源码方式维护在调度中心，支持通过Web IDE在线更新，实时编译和生效，因此不需要指定JobHandler。开发流程如下：
@@ -1235,7 +1259,7 @@ public void demoJobHandler() throws Exception {
     注册方式：调度中心获取执行器地址的方式；
         自动注册：执行器自动进行执行器注册，调度中心通过底层注册表可以动态发现执行器机器地址；
         手动录入：人工手动录入执行器的地址信息，多地址逗号分隔，供调度中心使用；
-    机器地址："注册方式"为"手动录入"时有效，支持人工维护执行器的地址信息；
+    机器地址："注册方式"为"手动录入"时有效，支持人工维护执行器的地址信息；注册地址格式可参考“http://127.0.0.1:9999/”，为执行器内嵌服务地址；
 
 ### 4.2 新建任务
 进入任务管理界面，点击“新增任务”按钮，在弹出的“新增任务”界面配置任务属性后保存即可。详情页参考章节 "三、任务详解"。
@@ -1632,8 +1656,8 @@ docker run --name xxl-job-admin -p 8080:8080 -d xuxueli/xxl-job-admin
 针对上述情况，可以通过结合 "单机路由策略（如：第一台、一致性哈希）" + "阻塞策略（如：单机串行、丢弃后续调度）" 来规避，最终避免任务重复执行。
 
 ### 5.21 命令行任务
-原生提供通用命令行任务Handler（Bean任务，"CommandJobHandler"）；业务方只需要提供命令行即可；
-如任务参数 "pwd" 将会执行命令并输出数据；
+原生提供通用命令行任务Handler（Bean任务，"CommandJobHandler"）；业务方只需要提供命令行即可，命令及参数之间通过空格隔开；
+如任务参数 "ls la" 或 "pwd" 将会执行命令并输出数据；
 
 ### 5.22 日志自动清理
 XXL-JOB日志主要包含如下两部分，均支持日志自动清理，说明如下：
@@ -1921,7 +1945,7 @@ Header：
 
   “执行器” 模式简介：
     - BEAN模式执行器：每个执行器都是Spring的一个Bean实例，XXL-JOB通过注解@JobHandler识别和调度执行器；
-      -GLUE模式执行器：每个执行器对应一段代码，在线Web编辑和维护，动态编译生效，执行器负责加载GLUE代码和执行；
+    - GLUE模式执行器：每个执行器对应一段代码，在线Web编辑和维护，动态编译生效，执行器负责加载GLUE代码和执行；
 
 ### 7.4 版本 V1.3.1，新特性[2016-05-23]
 - 1、更新项目目录结构：
@@ -2395,19 +2419,42 @@ public void execute() {
 - 6、【修复】漏洞修复，包括 "CVE-2024-42681" 子任务越权漏洞修复、"CVE-2023-33779" 任务API越权问题修复；
 - 7、【升级】多个项目依赖升级至较新稳定版本，涉及netty、groovy、gson、springboot、mybatis等；
 
-**备注：**
-- a、“CVE-2024-38820”漏洞源自spring，当前使用spring5.x及springboot2.x软件普遍受该问题影响。 该问题修复需要升级至spring6.x与springboot3.x，同时需要升级JDK17，如有诉求可自行升级。计划下个大版本升级spring及jdk版本解决该问题。
-- b、本次升级数据模型及通讯协议向前兼容，v2.4.*可无缝升级。
-
-
-### 7.36 版本 v2.5.0 Release Notes[规划中]
+### 7.36 版本 v2.5.0 Release Notes[2025-01-11]
 - 1、【优化】框架基础守护线程异常处理逻辑优化，避免极端情况下因Error导致调度终止问题；
-- 2、【优化】部分系统日志优化，提升可读性；
-- 3、【重构】调度线程任务信息更新逻辑优化，避免极端情况下已关闭任务被启动问题；
-- 5、【重构】执行器注册逻辑重构，降低多调度中心地址时并发注册问题；注册表“xxl_job_registry”新增唯一索引，避免冗余注册信息存储；
-- 4、[规划中]升级springboot3.x，解决2.x老版本漏洞类问题。注意，springboot3.x依赖jdk17；
-- 5、[规划中]安全功能增强，通讯加密参数改用加密数据避免AccessToken明文， 降低token泄漏风险；
-- 6、[规划中]登陆态Token声称逻辑优化，混淆登陆时间属性，降低token泄漏风险；
+- 2、【优化】底层通讯超时时间支持自定义，默认3秒，缓解网络抖动导致任务通讯超时问题；可参考 xxl-job-admin 和 samples 示例代码自行配置；
+- 3、【修复】调度中心快慢线程池优化拒绝策略，避免因默认AbortPolicy导致调度结果丢失问题；
+- 4、【优化】调度中心快慢线程池队列长度调整，优化激增调度时任务积压问题；
+- 5、【重构】调度线程任务信息更新逻辑优化，避免极端情况下已关闭任务被启动问题；
+- 6、【重构】执行器注册逻辑重构，降低多调度中心地址时并发注册问题；任务注册表新增唯一索引，避免冗余注册信息存储；
+- 7、【优化】部分系统日志优化，提升可读性；
+- 8、【优化】合并PR-3616，代码结构注释优化；
+- 9、【优化】合并PR-3619，避免调度过程中任务停止边界情况处理逻辑；
+- 10、【优化】合并PR-3605，避免子任务是任务本身导致死循环；
+- 11、【修复】合并PR-3585，修复全局密码长度不一致问题；
+- 12、【优化】合并PR-3518，SQL列别名反引号包裹，提升跨数据迁移兼容性；
+- 13、【优化】合并PR-3518、PR-3400，日志表索引优化，提升大日志量情况下日志查询及清理速度；
+- 14、【升级】多个项目依赖升级至较新稳定版本，涉及netty、slf4j、junit等；
+
+**备注：**
+- a、本次升级数据模型及通讯协议向前兼容，v2.4.*代码和系统可无缝升级（该版本优化了“xxl_job_log”表索引，建议低版本参考调整）；
+- b、版本v2.5.x为基于jdk8的最后的大版本，将会长期持续维护，问题及漏洞将会及时跟进修复。
+- c、下个大版本（v3.0）将会基于 jdk17 与 springboot3.x 构建；
+
+### 7.37 版本 v3.0.0 Release Notes[规划中]
+- 1、【升级】调度中心升级至 SpringBoot3 + JDK17；
+- 2、【升级】Docker镜像升级，镜像构建基于JDK17（openjdk:17-jdk-slim）；
+- 3、【优化】IP获取逻辑优化，优先遍历网卡来获取可用IP；
+- 4、【优化】通用命令行任务(“commandJobHandler”)优化，支持多参数执行，命令及参数之间通过空格隔开；如任务参数 "ls la" 或 "pwd" 将会执行命令并输出数据；
+- 5、【优化】通用HTTP任务（httpJobHandler）优化，任务参数格式调整为json格式；示例参数如下：
+```
+{
+    "url": "http://www.baidu.com",
+    "method": "get",
+    "data": "hello world"
+}
+```
+- 6、[规划中]登陆态Token生成逻辑优化，混淆登陆时间属性，降低token泄漏风险；
+- 7、[规划中]组件扫描改为BeanPostProcessor方式，避免小概率情况下提前初始化；底层组件移除单例写法，汇总factory统一管理；
 
 ### TODO LIST
 - 1、调度隔离：调度中心针对不同执行器，各自维护不同的调度和远程触发组件。
@@ -2439,6 +2486,7 @@ public void execute() {
 - 17、批量调度：调度请求入queue，调度线程批量获取调度请求并发起远程调度；提高线程效率；
 - 18、执行器端口复用，复用容器端口提供通讯服务；
 - 19、自定义失败重试时间间隔；
+- 20、安全功能增强，通讯加密参数改用加密数据避免AccessToken明文， 降低token泄漏风险；
 
 ## 八、其他
 
